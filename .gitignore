@@ -5,10 +5,7 @@
 # Visual Studio cache/options directory
 .vs/
 
-# NuGet Packages
-packages/
-*.nupkg
-*.snupkg
+# Build results
 
 # User-specific files
 *.user
