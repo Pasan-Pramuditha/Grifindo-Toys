@@ -139,41 +139,24 @@ cd Grifindo-Toys
 
 ---
 
-### 🚀 Step 2: Choose Your Way to Run
+### 🚀 Step 2: Open and Run in Visual Studio 2022
 
-#### Option A: One-Click Automated Run via `START.bat` (Recommended)
-
-The project includes an automated launcher script [`START.bat`](START.bat) that prepares and starts everything for you.
-
-1. Navigate to the project root folder.
-2. Double-click **`START.bat`** (or execute `.\START.bat` in CMD / PowerShell).
-3. The script will automatically perform:
-   - **Step 1:** Automatically locate `MSBuild.exe` from your Visual Studio 2022 installation.
-   - **Step 2:** Start the `MSSQLLocalDB` SQL Server instance if it is not already running.
-   - **Step 3:** Compile and build `Grifindo Toys.sln` in `Debug` mode.
-   - **Step 4:** Launch the application (`Grifindo Toys.exe`).
-
----
-
-#### Option B: Running via Visual Studio 2022
-
-If you want to edit code, design forms, or debug inside Visual Studio:
-
-1. **Start SQL LocalDB (First Time Only):**
+1. **Start SQL LocalDB (If not already running):**
    Open PowerShell or Command Prompt and run:
    ```cmd
    sqllocaldb create MSSQLLocalDB
    sqllocaldb start MSSQLLocalDB
    ```
+
 2. **Open the Solution:**
    - Double-click [`Grifindo Toys.sln`](Grifindo%20Toys.sln) to open it in Visual Studio 2022.
+
 3. **Verify NuGet / Component References:**
-   - The project uses the **Krypton Suite 4.5.9** UI library, which is pre-configured in the `packages/` directory with relative HintPaths. No extra manual assembly linking is required.
-4. **Build the Solution:**
-   - Click **Build** > **Build Solution** (or press `Ctrl + Shift + B`).
-5. **Run the Application:**
-   - Ensure the solution configuration is set to **Debug** and **Any CPU**.
-   - Click the green **Start** button (or press **`F5`**).
+   - The project includes **Krypton Suite 4.5.9** in the `packages/` folder. All references are pre-linked with relative paths.
+
+4. **Build and Run:**
+   - Set the configuration to **Debug** and **Any CPU**.
+   - Press **`F5`** or click the green **Start** button.
 
 ---
 
@@ -191,7 +174,6 @@ Once the application launches, the Login window (`Form1`) will appear:
 
 | Issue | Solution |
 | :--- | :--- |
-| **"MSBuild not found" error when running `START.bat`** | Verify Visual Studio 2022 is installed in the default location (`C:\Program Files\Microsoft Visual Studio\2022\...`). Ensure the **.NET desktop development** workload is checked in the Visual Studio Installer. |
 | **"Cannot connect to SQL Server" / Database error** | Open CMD and run `sqllocaldb start MSSQLLocalDB`. Verify the database file `Grifindo_Toys.mdf` is located in the `Grifindo Toys/` folder. |
 | **"ComponentFactory.Krypton" missing reference error** | Check that the `packages/` directory exists in the solution root containing `Krypton.Components.Suite.4.5.9`. The `.csproj` is pre-configured with relative HintPaths pointing to this folder. |
 
@@ -203,7 +185,6 @@ Once the application launches, the Login window (`Form1`) will appear:
 Grifindo-Toys/
 │
 ├── Grifindo Toys.sln                     # Visual Studio Solution File
-├── START.bat                             # One-click build & launcher script
 ├── README.md                             # Project documentation
 ├── .gitignore                            # Git ignore configuration
 │
