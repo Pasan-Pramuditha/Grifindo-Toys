@@ -16,6 +16,7 @@ A complete desktop management solution developed for **Grifindo Toys**, providin
 - [Default Login Credentials](#-default-login-credentials)
 - [Salary Calculation Logic](#-salary-calculation-logic)
 - [Database Schema](#-database-schema)
+- [Connection String Configuration](#-connection-string-configuration)
 - [Prerequisites](#-prerequisites)
 - [How to Run](#-how-to-run)
 - [Project File Structure](#-project-file-structure)
@@ -111,6 +112,79 @@ The database (`Grifindo_Toys`) runs locally on **SQL Server LocalDB** (`(localdb
 | **`Branch_Tbl`** | Company branch records | `Branch_ID`, `Branch_Name`, `Location`, `Contect` |
 | **`Bonus_Tbl`** | Bonus allocations | `Bonus_ID`, `Emp_ID`, `Bonus_Amount`, `Date` |
 | **`Attendance_Tbl`** | Attendance logs | Attendance records |
+
+---
+
+## 🔗 Connection String Configuration
+
+The system uses a centralized database connection string, ensuring that updating it in one place updates all system forms (`Form1`, `Employee`, `Issue Salary`, `Setting`, `Branch`, `Bonus`, `Registration`).
+
+### 📍 File Locations:
+1. **Central C# Provider:** [`Grifindo Toys/DbConfig.cs`](Grifindo%20Toys/DbConfig.cs) *(Primary connection string used across all forms)*
+2. **Application Configuration:** [`Grifindo Toys/App.config`](Grifindo%20Toys/App.config) *(Used for DataSets & report controls)*
+
+---
+
+### ⚙️ How to Change / Configure the Connection String
+
+Open [`Grifindo Toys/DbConfig.cs`](Grifindo%20Toys/DbConfig.cs) in Visual Studio or any text editor:
+
+```csharp
+namespace Grifindo_Toys
+{
+    public static class DbConfig
+    {
+        public static readonly string ConnectionString = @"<YOUR_CONNECTION_STRING_HERE>";
+    }
+}
+```
+
+Choose the connection string format matching your local SQL setup:
+
+#### 1. SQL Server LocalDB with Initial Catalog (Default):
+Used when `Grifindo_Toys` is attached to your local MSSQLLocalDB instance:
+```csharp
+public static readonly string ConnectionString = 
+    @"Data Source=(LocalDB)\MSSQLLocalDB;Initial Catalog=Grifindo_Toys;Integrated Security=True";
+```
+
+#### 2. SQL Server LocalDB with Direct File Path:
+Used to directly mount the `Grifindo_Toys.mdf` file from the project directory without manually attaching to SQL Server:
+```csharp
+public static readonly string ConnectionString = 
+    @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\Grifindo_Toys.mdf;Integrated Security=True";
+```
+
+#### 3. Standard SQL Server / SQL Express (Windows Authentication):
+Used when running a local standalone SQL Server or SQL Express:
+```csharp
+// Standard SQL Server:
+public static readonly string ConnectionString = 
+    @"Data Source=localhost;Initial Catalog=Grifindo_Toys;Integrated Security=True";
+
+// Or for SQL Server Express instance:
+public static readonly string ConnectionString = 
+    @"Data Source=.\SQLEXPRESS;Initial Catalog=Grifindo_Toys;Integrated Security=True";
+```
+
+#### 4. SQL Server Authentication (Username & Password):
+Used when connecting to a remote or password-protected SQL server:
+```csharp
+public static readonly string ConnectionString = 
+    @"Data Source=localhost;Initial Catalog=Grifindo_Toys;User ID=sa;Password=YourPassword123;";
+```
+
+---
+
+### 🔍 How to Find Your Server Connection String in Visual Studio:
+1. Open Visual Studio 2022 and go to **View** ➡️ **Server Explorer** (or **SQL Server Object Explorer**).
+2. Right-click **Data Connections** and choose **Add Connection...**
+3. Choose **Microsoft SQL Server** as Data source.
+4. In **Server name**, enter `(localdb)\MSSQLLocalDB` or your machine name (e.g., `localhost`).
+5. Under **Select or enter a database name**, select `Grifindo_Toys` (or browse to `Grifindo_Toys.mdf`).
+6. Click **Test Connection** to confirm.
+7. Once connected, click the connection in Server Explorer, look at the **Properties window** (bottom right), and copy the value from **Connection String**.
+8. Paste this string into [`DbConfig.cs`](Grifindo%20Toys/DbConfig.cs) and [`App.config`](Grifindo%20Toys/App.config).
 
 ---
 
