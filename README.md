@@ -18,8 +18,7 @@ A complete desktop management solution developed for **Grifindo Toys**, providin
 - [Database Schema](#-database-schema)
 - [Connection String Configuration](#-connection-string-configuration)
 - [Prerequisites](#-prerequisites)
-- [Setup & Run Guide for Any Computer](#-setup--run-guide-for-any-computer)
-- [Troubleshooting & Common Errors](#-troubleshooting--common-errors)
+- [How to Run](#-how-to-run)
 - [Project File Structure](#-project-file-structure)
 
 ---
@@ -203,111 +202,54 @@ Before running the application, make sure your computer has the following instal
 
 ---
 
-## ⚡ Setup & Run Guide for Any Computer
+## ⚡ How to Run the Project
 
-If you or a colleague have cloned or downloaded this project to a new computer, follow these exact steps to run it smoothly:
-
----
-
-### 📥 Step 1: Clone or Download the Project
-- **Option A (Using Git):**
-  ```bash
-  git clone https://github.com/Pasan-Pramuditha/Grifindo-Toys.git
-  cd Grifindo-Toys
-  ```
-- **Option B (Download ZIP):**
-  Click the green **Code** button on GitHub ➡️ **Download ZIP**, and extract it into a folder on your computer.
+### 📥 Step 1: Clone the Repository
+Open PowerShell or Command Prompt and clone the repository:
+```bash
+git clone https://github.com/Pasan-Pramuditha/Grifindo-Toys.git
+cd Grifindo-Toys
+```
 
 ---
 
-### 🗄️ Step 2: Start SQL Server LocalDB
-The project database runs on Microsoft SQL Server LocalDB. Ensure the LocalDB instance is created and running:
+### 🚀 Step 2: Open and Run in Visual Studio 2022
 
-1. Open **Command Prompt (CMD)** or **PowerShell** as Administrator or normal user.
-2. Run:
+1. **Start SQL LocalDB (If not already running):**
+   Open PowerShell or Command Prompt and run:
    ```cmd
    sqllocaldb create MSSQLLocalDB
    sqllocaldb start MSSQLLocalDB
    ```
-3. Verify that the state says `State: Running` by running:
-   ```cmd
-   sqllocaldb info MSSQLLocalDB
-   ```
+
+2. **Open the Solution:**
+   - Double-click [`Grifindo Toys.sln`](Grifindo%20Toys.sln) to open it in Visual Studio 2022.
+
+3. **Verify NuGet / Component References:**
+   - The project includes **Krypton Suite 4.5.9** in the `packages/` folder. All references are pre-linked with relative paths.
+
+4. **Build and Run:**
+   - Set the configuration to **Debug** and **Any CPU**.
+   - Press **`F5`** or click the green **Start** button.
 
 ---
 
-### 🔗 Step 3: Attach the Database (`Grifindo_Toys.mdf`)
-The database files (`Grifindo_Toys.mdf` and `Grifindo_Toys_log.ldf`) are already included inside the `Grifindo Toys/` folder. On a new machine, attach it to your SQL Server using one of these simple methods:
+### 🔑 Step 3: Log In to the System
 
-#### 🔹 Method A: Using Visual Studio (Easiest - 1 Minute)
-1. Open Visual Studio 2022.
-2. Go to top menu: **View** ➡️ **SQL Server Object Explorer** (or **Server Explorer**).
-3. Expand **SQL Server** ➡️ **(localdb)\MSSQLLocalDB**.
-4. Right-click on **Databases** ➡️ Select **Attach Database...**
-5. Click **Add** ➡️ Browse and select:
-   `...\Grifindo-Toys\Grifindo Toys\Grifindo_Toys.mdf`
-6. Click **OK**. The database `Grifindo_Toys` is now attached and ready!
-
-#### 🔹 Method B: Zero-Manual-Attach Mode (Via Code)
-If you don't want to attach the MDF manually in SQL Server, open [`Grifindo Toys/DbConfig.cs`](Grifindo%20Toys/DbConfig.cs) and change the line to:
-```csharp
-public static readonly string ConnectionString = 
-    @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\Grifindo_Toys.mdf;Integrated Security=True";
-```
-*(This automatically mounts the MDF file located in your project folder when the app starts).*
-
-#### 🔹 Method C: Using SQL Server Management Studio (SSMS)
-1. Open SSMS and connect to Server Name: `(localdb)\MSSQLLocalDB`.
-2. Right-click **Databases** ➡️ **Attach...** ➡️ Click **Add**.
-3. Select `Grifindo_Toys.mdf` from your cloned folder and click **OK**.
-
----
-
-### 💻 Step 4: Open the Solution in Visual Studio 2022
-1. In File Explorer, go to the project folder and double-click:
-   [`Grifindo Toys.sln`](Grifindo%20Toys.sln)
-2. In Solution Explorer, ensure all project files are loaded.
-
----
-
-### 📦 Step 5: Restore Dependencies & Krypton UI Suite
-- The **Krypton Suite 4.5.9** UI controls are bundled inside the `packages/` folder.
-- In Visual Studio, right-click the solution in **Solution Explorer** (top item) and click **Restore NuGet Packages**.
-- Check `References` under the `Grifindo Toys` project:
-  - `ComponentFactory.Krypton.Toolkit`
-  - `ComponentFactory.Krypton.Navigator`
-  - If any reference has a yellow warning icon, right-click **References** ➡️ **Add Reference...** ➡️ **Browse** ➡️ navigate to `packages\Krypton.Components.Suite.4.5.9\lib\net40\` and select the DLL files.
-
----
-
-### 🚀 Step 6: Build and Run
-1. Set the Solution Configuration to **Debug** and Solution Platform to **Any CPU**.
-2. Press **`Ctrl + Shift + B`** to build the solution. Ensure you get:
-   `========== Build: 1 succeeded, 0 failed ==========`
-3. Press **`F5`** (or click the green **Start** button).
-
----
-
-### 🔑 Step 7: Log In to the System
-When the application launches, the Login window (`Form1`) will appear:
+Once the application launches, the Login window (`Form1`) will appear:
 - **Username:** `admin`
 - **Password:** `admin`
-- Click **Login** to enter the main **Executive Dashboard**.
-- *(You can also click **Register** to create your own new administrator account).*
+- Click **Login** to enter the **Executive Dashboard**.
+- To add additional administrative users, click **Register** to open the registration module.
 
 ---
 
-## 🛠️ Troubleshooting & Common Errors
+## 🛠️ Troubleshooting & FAQs
 
-If anyone encounters an error when launching on their PC, find the fix below:
-
-| # | Error Message / Symptom | Why it happens | How to Fix |
-| :- | :--- | :--- | :--- |
-| **1** | **`Cannot open database "Grifindo_Toys" requested by the login`** | The database MDF file is not yet attached to your machine's LocalDB. | Follow **Step 3** above to attach `Grifindo_Toys.mdf` in Visual Studio or SSMS, or switch to `AttachDbFilename` in `DbConfig.cs`. |
-| **2** | **`A network-related or instance-specific error occurred while establishing a connection to SQL Server`** | The SQL LocalDB service is not currently running. | Open Command Prompt and run: <br>`sqllocaldb create MSSQLLocalDB`<br>`sqllocaldb start MSSQLLocalDB` |
-| **3** | **`The type or namespace name 'ComponentFactory' could not be found`** | Visual Studio hasn't resolved the Krypton Suite DLL references. | Right-click the Solution ➡️ **Restore NuGet Packages**. Make sure the `packages/` folder exists in your cloned repository. |
-| **4** | **`The targeted framework '.NETFramework,Version=v4.7.2' (or v4.8) is not installed`** | Your Visual Studio is missing the .NET Framework Developer Pack. | Open **Visual Studio Installer** ➡️ Click **Modify** on VS 2022 ➡️ Under **Individual Components**, search for `.NET Framework 4.7.2 Targeting Pack` or `4.8`, check it, and click Modify/Install. |
-| **5** | **Login fails or user doesn't exist** | Default admin account is not present in the DB table. | Click the **Register** button on the Login screen and create a new username and password. |
+| Issue | Solution |
+| :--- | :--- |
+| **"Cannot connect to SQL Server" / Database error** | Open CMD and run `sqllocaldb start MSSQLLocalDB`. Verify the database file `Grifindo_Toys.mdf` is located in the `Grifindo Toys/` folder. |
+| **"ComponentFactory.Krypton" missing reference error** | Check that the `packages/` directory exists in the solution root containing `Krypton.Components.Suite.4.5.9`. The `.csproj` is pre-configured with relative HintPaths pointing to this folder. |
 
 ---
 
